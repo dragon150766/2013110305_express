@@ -11,9 +11,9 @@ exports.companyIndex = (req, res, next) =>{
           },
           {
               id:2,
-              name:'Microsoft',
+              name:'Riot-Game-Thailand',
               address:{
-                  province:'U.S.',
+                  province:'Thailand',
                   postcode: 74600
               }
           },
