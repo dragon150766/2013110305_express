@@ -10,6 +10,7 @@ var comanyRouter = require('./routes/company')
 
 var app = express();
 
+//over there connetDB
 mongoose.connect('mongodb+srv://Siripong:2013110305@2013110305-fluk.lwcv68e.mongodb.net/restfulapi?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(logger('dev'));
