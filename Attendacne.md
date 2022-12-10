@@ -1,2 +1,4 @@
->**Siripong(Fluk)**: Chapter03 Courses
->>แนะน ํา Node.js และใชง้ําน Express.js
+แนะน ํา MongoDB
+• กํารออกแบบ Schema ในรปู แบบตํา่ งๆ
+• ตดิตงั้ mongoose เชอื่มตอ่ กบั ฐํานขอ้มลู
+• CRUD for mongoose
