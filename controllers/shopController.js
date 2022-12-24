@@ -1,4 +1,5 @@
 const Shop = require('../models/shop')
+const Menu = require('../models/menu')
 
 exports.shop = async (req, res, next) =>{
     
@@ -21,7 +22,7 @@ exports.shop = async (req, res, next) =>{
 
 exports.menu = async (req, res, next) =>{
     
-    const menus = await Shop.find().sort({_id:-1})
+    const menus = await Menu.find().sort({_id:-1})
 
    
 
