@@ -1,11 +1,31 @@
 const Shop = require('../models/shop')
 
-exports.shop = async (req, res, next) => {
+exports.shop = async (req, res, next) =>{
+    
+    const shops = await Shop.find().select('name photp location').sort({_id:-1})
 
-    const shop = await Shop.find().sort({ _id: -1 });
+    const ShopWithPhotpDomain = shops.map( (shop,index) => {
+        return{
+            id: shop._id,
+            name: shop.name,
+            photo: "http://localhost:3000/image/" + shop.photo,
+            location: shop.location
+         
+        }
+    });
 
     res.status(200).json({
-      data: shop,
-    });
+        data: ShopWithPhotpDomain
+    })
+}
+
+exports.menu = async (req, res, next) =>{
     
-  };
+    const menus = await Shop.find().sort({_id:-1})
+
+   
+
+    res.status(200).json({
+        data: menus
+    })
+}

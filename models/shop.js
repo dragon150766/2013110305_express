@@ -12,9 +12,9 @@ const shopSchema = new Schema({
 
   },{ 
     timestamps: true,
-    collection:"shop"
+    collection:"shops"
 });
 
-const shop = mongoose.model("shop",shopSchema)
+const shop = mongoose.model("Shop",shopSchema)
 
 module.exports = shop
