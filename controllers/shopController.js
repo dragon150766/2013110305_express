@@ -4,13 +4,13 @@ const Domain = require('../config/index')
 
 exports.shop = async (req, res, next) =>{
     
-    const shops = await Shop.find().select('name photp location').sort({_id:-1})
+    const shops = await Shop.find().select('name photo location').sort({_id:-1})
 
     const ShopWithPhotpDomain = shops.map( (shop,index) => {
         return{
             id: shop._id,
             name: shop.name,
-            photo: Domain.DOMAIN + shop.photo,
+            photo: Domain.DOMAIN+"/images/" + shop.photo,
             location: shop.location
          
         }
