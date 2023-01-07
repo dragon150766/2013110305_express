@@ -9,12 +9,13 @@ var usersRouter = require('./routes/users');
 var comanyRouter = require('./routes/company');
 var staffRouter = require('./routes/staffPage');
 var shopRouter = require('./routes/shop')
+const config = require("./config/index")
 
 
 var app = express();
 
 //over there connetDB
-mongoose.connect('mongodb+srv://Siripong:2013110305@2013110305-fluk.lwcv68e.mongodb.net/restfulapi?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+mongoose.connect(config.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 
 app.use(logger('dev'));
 app.use(express.json());
