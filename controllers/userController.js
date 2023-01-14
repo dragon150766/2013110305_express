@@ -1,4 +1,6 @@
+const { findOne } = require("../models/user")
 const User = require("../models/user")
+
 
 exports.userIndex = async (req, res, next) =>{
 
@@ -19,7 +21,22 @@ exports.userBio = (req, res, next) =>{
 }
 
 exports.register = async (req, res, next) =>{
+  try{
+
   const { name, email, password} = req.body
+
+  const existEmail = await User.findOne({ email:email })
+  if(existEmail){
+   const error = new Error("This email have already")
+   error.statusCode = 400
+   throw error;
+  }
+
+  if(password.length <5 ){
+    const error = new Error("This password less that 5")
+   error.statusCode = 400
+   throw error;
+  }
 
   let user = new User();
   user.name = name
@@ -31,4 +48,9 @@ exports.register = async (req, res, next) =>{
   res.status(200).json({
     message: "register Suscced"
   })
+
+  } catch(error) {
+    next(error)
+  }
+
 }

@@ -11,6 +11,7 @@ var staffRouter = require('./routes/staffPage');
 var shopRouter = require('./routes/shop')
 const config = require("./config/index")
 
+const errorHandler = require('./middleware/errorHandler')
 
 var app = express();
 
@@ -31,7 +32,7 @@ app.use('/company', comanyRouter);
 app.use('/staff', staffRouter);
 app.use('/shop',shopRouter)
 
-
+app.use(errorHandler)
 
 
 module.exports = app;

@@ -62,7 +62,9 @@ exports.show = async (req, res, next) =>{
     })
 
     if(!staff){
-        throw new Error('No have this ID')
+        const error = new Error("No have this ID")
+        error.statusCode = 400
+        throw error;
     }
 
     res.status(200).json({
@@ -71,11 +73,7 @@ exports.show = async (req, res, next) =>{
 
     } catch (error){
 
-        res.status(400).json({
-            error:{
-                message:"Error: "+error.message
-            }
-        })
+        next(error)
     }
 }
 
@@ -88,7 +86,9 @@ exports.destroy = async (req, res, next) =>{
         })
 
         if(staff.deleteCount === 0){
-            throw new Error('No have this ID')
+            const error = new Error('No have this ID')
+            error.statusCode = 400
+            throw error;
         }else{
             res.status(200).json({
                 message: "delete sussced"
@@ -96,13 +96,7 @@ exports.destroy = async (req, res, next) =>{
         }
 
     }catch(error){
-
-        res.status(400).json({
-            error:{
-                message:"Error: "+error.message
-            }
-        })
-
+        next(error)
     }
 }
 
@@ -122,11 +116,18 @@ exports.update = async (req, res, next) =>{
         //     name: name,
         //     salary: salary
         // })
+        
 
         const staff = await Staff.updateOne({ _id : id},{
             name: name,
             salary: salary
         })
+
+        if(staff.n == 0){
+            const error = new Error('have no this id')
+            error.statusCode = 400
+            throw error;
+        }
 
         res.status(200).json({
             message: "Update Sussced"
@@ -135,13 +136,7 @@ exports.update = async (req, res, next) =>{
         
 
     }catch(error){
-
-        res.status(400).json({
-            error:{
-                message:"Error: "+error.message
-            }
-        })
-
+        next(error)
     }
 
 }

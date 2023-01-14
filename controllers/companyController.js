@@ -16,7 +16,9 @@ exports.show = async (req, res, next) =>{
         const company = await Company.findById(id)
 
         if(!company){
-            throw new Error('No have this ID')
+            const error = new Error('No have this ID')
+            error.statusCode = 400
+            throw error;
         }
 
         res.status(200).json({
@@ -24,9 +26,7 @@ exports.show = async (req, res, next) =>{
         })
 
     }catch(error){
-        res.status(400).json({
-            message: "Error: "+error.message
-        })
+        next(error)
     }
 }
 
@@ -39,8 +39,10 @@ exports.destroy = async (req, res, next) =>{
            _id:id
         })
 
-        if(company.deleteCount === 0){
-           throw new error('No have this ID')
+        if(company.deletedCount === 0){
+           const error = new Error('No have this ID')
+           error.statusCode = 400
+           throw error;
         }else{
             res.status(200).json({
                 message: "Delete Successed"
@@ -48,11 +50,7 @@ exports.destroy = async (req, res, next) =>{
         }
 
     }catch(error){
-        res.status(400).json({
-            error:{
-                message:"Error: "+error.message
-            }
-        })
+        next(error)
     }
 }
 
@@ -61,21 +59,23 @@ exports.update = async (req, res, next) =>{
 
         const { id } = req.params
         const { name, salary} = req.body
-        const company = await Company.findOneAndUpdate(id,{
+        const company = await Company.findOneAndUpdate({_id: id},{
             name: name,
             salary: salary
         })
+
+        if(!company){
+            const error = new Error('have no this id')
+            error.statusCode = 400
+            throw error;
+        }
 
         res.status(200).json({
             message:"Update Sussced"
         })
 
     }catch(error){
-        res.status(400).json({
-            error:{
-                message:"Error: "+error.message
-            }
-        })
+        next(error)
     }
 }
 

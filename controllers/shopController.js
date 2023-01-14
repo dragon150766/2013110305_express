@@ -47,18 +47,19 @@ exports.show = async (req, res, next) =>{
     const shop = await Shop.findOne({
         _id : id
     }).populate('menus')
+    
+    if(!shop){
+        const error = new Error('have no this id')
+        error.statusCode = 400
+        throw error;
+    }
 
     res.status(200).json({
         data : shop
     })
 
     } catch (error){
-
-        res.status(400).json({
-            error:{
-                message:"Error: "+error.message
-            }
-        })
+        next(error)
     }
 }
 
