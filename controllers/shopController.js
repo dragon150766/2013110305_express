@@ -1,6 +1,7 @@
 const Shop = require('../models/shop')
 const Menu = require('../models/menu')
 const Domain = require('../config/index')
+const { body, validationResult } = require('express-validator');
 
 const fs = require('fs');
 const path = require('path');
@@ -65,14 +66,28 @@ exports.show = async (req, res, next) =>{
 
 exports.insert = async (req, res, next) =>{
 
+   try{
     const { name, location, photo  } = req.body
 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error("Data is not true")
+      error.statusCode = 422
+      error.validation = errors.array()
+      throw error;
+    }
     
+    let s 
+    if(!photo){
+    s= "nopic.png"
+    }else{
+    s=  await saveImageToDisk(photo)
+}
 
     let shop = new Shop({
         name: name,
         location: location,
-        photo: await saveImageToDisk(photo)
+        photo: s
     });
 
     await shop.save();
@@ -80,6 +95,10 @@ exports.insert = async (req, res, next) =>{
     res.status(200).json({
         message: 'the data has be save!'   
     })
+
+   }catch(error){
+    next(error)
+   }
 }
 
 async function saveImageToDisk(baseImage) {

@@ -1,5 +1,6 @@
 const Staff = require('../models/staff')
 const Domain = require('../config/index')
+const { body, validationResult } = require('express-validator');
 
 const fs = require('fs');
 const path = require('path');
@@ -28,7 +29,17 @@ exports.index = async (req, res, next) =>{
 
 exports.insert = async (req, res, next) =>{
 
+   try{
     const { name, salary, photo } = req.body
+
+    // Validation
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error("Data is not true")
+        error.statusCode = 422
+        error.validation = errors.array()
+        throw error;
+    }
 
     let s 
         if(!photo){
@@ -50,6 +61,9 @@ exports.insert = async (req, res, next) =>{
     res.status(200).json({
         message: 'the data has be save!'   
     })
+   }catch(error){
+    next(error)
+   }
 }
 
 exports.show = async (req, res, next) =>{

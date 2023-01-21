@@ -1,5 +1,6 @@
 const { findOne } = require("../models/user")
 const User = require("../models/user")
+const { body, validationResult } = require('express-validator');
 
 
 exports.userIndex = async (req, res, next) =>{
@@ -24,6 +25,15 @@ exports.register = async (req, res, next) =>{
   try{
 
   const { name, email, password} = req.body
+
+  // Validation
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error("Data is not true")
+      error.statusCode = 422
+      error.validation = errors.array()
+      throw error;
+    }
 
   const existEmail = await User.findOne({ email:email })
   if(existEmail){
@@ -53,4 +63,40 @@ exports.register = async (req, res, next) =>{
     next(error)
   }
 
+}
+
+exports.login = async (req, res, next ) => {
+  try{
+    const { email, password} = req.body
+
+     // Validation
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("Data is not true")
+    error.statusCode = 422
+    error.validation = errors.array()
+    throw error;
+  }
+
+  const user = await User.findOne({ email:email })
+  if(!user){
+   const error = new Error("This email have no data.")
+   error.statusCode = 404
+   throw error;
+  }
+  
+  const isValid = await user.checkPassword(password)
+  if(!isValid){
+    const error = new Error("Password not match.")
+    error.statusCode = 401
+    throw error;
+   }
+
+    res.status(200).json({
+      message: "Hello Login"
+    })
+
+  }catch(error){
+    next(error)
+  }
 }
