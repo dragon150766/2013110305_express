@@ -1,3 +1,5 @@
->**Siripong Poolnuch**:Chapter7
+>**Siripong Poolnuch**:Chapter8
 >>[Course]
->>กํารใชง้ําน Environment ใน Node.js และกํารท ําระบบ Login
+>>กํารท ําระบบล็อกอนิตํามมําตรฐําน JSON Web
+Token ดว้ย Passport.js และ กํารตรวจสอบควําม
+ถกู ตอ้ งของขอ้มลู (Validation)
