@@ -1,6 +1,8 @@
 const { findOne } = require("../models/user")
 const User = require("../models/user")
 const { body, validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken')
+const config = require('../config/index')
 
 
 exports.userIndex = async (req, res, next) =>{
@@ -92,8 +94,18 @@ exports.login = async (req, res, next ) => {
     throw error;
    }
 
+   //create Token
+   const token = await jwt.sign({
+    id:user._id,
+    role:user.role,
+   },config.SECRET_KEY ,{ expiresIn: "5 days"})
+
+   const expires_In = jwt.decode(token)
+
     res.status(200).json({
-      message: "Hello Login"
+      access_token: token,
+      expires_In: expires_In.exp,
+      token_type: 'Bearer'
     })
 
   }catch(error){

@@ -17,7 +17,7 @@ userSchema.methods.encryptPassword = async function(password){
   return hashPassword
 }
 
-userSchema.method.checkPassword = async function(password){
+userSchema.methods.checkPassword = async function(password){
   const isValid = await bcrypt.compare(password, this.password)
   return isValid
 }
