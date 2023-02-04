@@ -1,5 +1,3 @@
->**Siripong Poolnuch**:Chapter8
+>**Siripong Poolnuch**:Chapter9
 >>[Course]
->>กํารท ําระบบล็อกอนิตํามมําตรฐําน JSON Web
-Token ดว้ย Passport.js และ กํารตรวจสอบควําม
-ถกู ตอ้ งของขอ้มลู (Validation)
+>>กํารจัดกํารสทิ ธผิ์ ใู้ชง้ํานพนื้ ฐําน
