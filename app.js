@@ -10,6 +10,7 @@ var comanyRouter = require('./routes/company');
 var staffRouter = require('./routes/staffPage');
 var shopRouter = require('./routes/shop')
 const config = require("./config/index")
+const passport = require("passport")
 
 const errorHandler = require('./middleware/errorHandler')
 
@@ -25,6 +26,7 @@ app.use(express.json({
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize())
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
